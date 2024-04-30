@@ -19,11 +19,13 @@
 <meta property="og:site_name" content="无涯博客">
 <meta property="og:description" content="The pytest framework makes it easy to write small, readable tests, and can scale to support complex functional testing for applications and libraries. 这段话很好地阐述了Pytest的设计思想与强大的特性。迄今为止，不管是市场的招聘需求还是在企业级里">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2024/04/30/Pytest%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83%E4%B8%8E%E6%B5%8B%E8%AF%95%E6%90%9C%E7%B4%A2/Hexo/source/_posts/Pytest%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83%E4%B8%8E%E6%B5%8B%E8%AF%95%E6%90%9C%E7%B4%A2/%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B.jpg">
 <meta property="article:published_time" content="2024-04-30T09:44:06.000Z">
-<meta property="article:modified_time" content="2024-04-30T09:59:04.070Z">
+<meta property="article:modified_time" content="2024-04-30T10:09:34.928Z">
 <meta property="article:author" content="无涯">
 <meta property="article:tag" content="Pytest测试框架">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/04/30/Pytest%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83%E4%B8%8E%E6%B5%8B%E8%AF%95%E6%90%9C%E7%B4%A2/Hexo/source/_posts/Pytest%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83%E4%B8%8E%E6%B5%8B%E8%AF%95%E6%90%9C%E7%B4%A2/%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B.jpg">
   <!-- canonical -->
   
   <link rel="canonical" href="http://example.com/2024/04/30/Pytest测试用例编写规范与测试搜索/">
@@ -84,7 +86,7 @@
         <div class="post-md">
             <p>The <code>pytest</code> framework makes it easy to write small, readable tests, and can scale to support complex functional testing for applications and libraries. 这段话很好地阐述了Pytest的设计思想与强大的特性。迄今为止，不管是市场的招聘需求还是在企业级里面进行自动化测试都需要掌握Python语言体系中的Pytest测试框架。Pytest以轻量级的设计可以在编写TestCase方面具备天然的优势，又能够满足不同测试场景下的应用，本文章主要详细的阐述Pytest测试框架中测试用例编写规则与测试用例搜索规则。</p>
 <h2 id="TestCase编写规范"><a href="#TestCase编写规范" class="headerlink" title="TestCase编写规范"></a>TestCase编写规范</h2><p>从研发质量角度而言，所谓测试就是通过测试的思维与技术的思维来保障被测产品的逻辑可用性、业务完整性、底层服务的稳定性、用户层面的易用性。因此测试需要设计出一定的TestCase来验证结果满足这个特性，TestCase的要素很多，必要的TestCase要素分别是前提条件、测试步骤、期望结果，在自动化测试领域设计（编写）的TestCase依然会满足这个要素，但是从TestCase独立性、完整性等特点出发，自动化的TestCase要素分别是前置条件、测试步骤、结果验证、清理。前置条件与清理部分我们称呼为“测试固件”，也就是针对一个测试场景需要验证时的初始化与清理的部分，自动化测试用例编写规范详细信息见<a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzAwMzY3MTU3Nw==&mid=2650529405&idx=1&sn=cddd2f89b75bc7c10c62bf2588e3f7fd&chksm=8338ed0bb44f641d52b1f3deb47a63a99e07e394a77a49b0412bffca10c1a284027dc1aab36e&scene=21#wechat_redirect">自动化测试用例规范</a>，根据这些规范与原则，可以总结出TestCase与测试对象之间的关系具体如下。</p>
-<p>![image-20240430175332136](&#x2F;Users&#x2F;liwangping&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20240430175332136.png)</p>
+<p><img src="/2024/04/30/Pytest%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83%E4%B8%8E%E6%B5%8B%E8%AF%95%E6%90%9C%E7%B4%A2/Hexo/source/_posts/Pytest%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83%E4%B8%8E%E6%B5%8B%E8%AF%95%E6%90%9C%E7%B4%A2/%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B.jpg" alt="测试用例"></p>
 
         </div>
     
