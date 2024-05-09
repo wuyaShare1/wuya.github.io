@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+  <meta name="robots" content="index, follow">
+  <!-- title -->
+  
+    
+  <title>Pytest测试框架之Conftest.py详解 - 无涯博客</title>
+    
+  
+  
+  <!-- open graph -->
+  <meta name="description" content="The pytest framework makes it easy to write small, readable tests, and can scale to support complex functional testing for applications and libraries. 这段话很好地阐述了Pytest的设计思想与强大的特性。之前详细地阐述了Pytest测试框架搜索规则">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pytest测试框架之Conftest.py详解">
+<meta property="og:url" content="http://example.com/2024/05/09/Pytest%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E4%B9%8BConftest-py%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="无涯博客">
+<meta property="og:description" content="The pytest framework makes it easy to write small, readable tests, and can scale to support complex functional testing for applications and libraries. 这段话很好地阐述了Pytest的设计思想与强大的特性。之前详细地阐述了Pytest测试框架搜索规则">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2024/05/09/Pytest%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E4%B9%8BConftest-py%E8%AF%A6%E8%A7%A3/%E7%9B%AE%E5%BD%95.jpg">
+<meta property="og:image" content="http://example.com/2024/05/09/Pytest%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E4%B9%8BConftest-py%E8%AF%A6%E8%A7%A3/%E6%95%B4%E4%BD%93%E7%9B%AE%E5%BD%95.jpg">
+<meta property="og:image" content="http://example.com/2024/05/09/Pytest%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E4%B9%8BConftest-py%E8%AF%A6%E8%A7%A3/%E7%BB%93%E6%9E%9C%E4%BF%A1%E6%81%AF.jpg">
+<meta property="og:image" content="http://example.com/2024/05/09/Pytest%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E4%B9%8BConftest-py%E8%AF%A6%E8%A7%A3/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7.jpg">
+<meta property="article:published_time" content="2024-05-09T03:42:18.000Z">
+<meta property="article:modified_time" content="2024-05-09T11:01:03.186Z">
+<meta property="article:author" content="无涯">
+<meta property="article:tag" content="Pytest测试框架">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/05/09/Pytest%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E4%B9%8BConftest-py%E8%AF%A6%E8%A7%A3/%E7%9B%AE%E5%BD%95.jpg">
+  <!-- canonical -->
+  
+  <link rel="canonical" href="http://example.com/2024/05/09/Pytest测试框架之Conftest-py详解/">
+  
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="/img/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+  <!-- CSS -->
+  
+<link rel="stylesheet" href="/css/reset.css">
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<link rel="stylesheet" href="/css/markdown.css">
+
+  
+<link rel="stylesheet" href="/css/fonts.css">
+
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+    <body>
+        <div class="paper">
+            <div class="paper-main">
+                
+                    <div class="post-header">
+    <a class="logo" href="/">无涯博客</a>
+    <!-- <div class="logo"><a href="/" title="Len"><img src="/img/logo.svg" alt="Len" aria-label="logo" height="20"></a></div> -->
+        <ul class="nav">
+            
+            <li><a href="/">Home</a></li>
+            
+            <li><a href="/about">About</a></li>
+            
+            <li><a href="/archives">Archives</a></li>
+            
+        </ul>
+
+
+    </a>
+</div>
+
+                
+                <div class="post-main">
+    
+        <div class="post-main-title">
+            Pytest测试框架之Conftest.py详解
+        </div>
+        <div class="post-meta">
+            2024-05-09 ｜ 
+            
+        </div>
+        <!-- 圆角分类 -->
+        <!-- <div class="tags"> -->
+            <!--  -->
+        <!-- </div> -->
+        <div class="post-md">
+            <p>The <code>pytest</code> framework makes it easy to write small, readable tests, and can scale to support complex functional testing for applications and libraries. 这段话很好地阐述了Pytest的设计思想与强大的特性。之前详细地阐述了<a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzAwMzY3MTU3Nw==&mid=2650529557&idx=1&sn=d08c59cf20f88a2f640c45b70b46c36f&chksm=8338ec63b44f657579dc7ce0db3fbe0f7ac33cd198759cd0c1daa4bd10086737804a69914a5b&scene=21#wechat_redirect">Pytest测试框架搜索规则</a>、<a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzAwMzY3MTU3Nw==&mid=2650529569&idx=1&sn=81288481d0c9ef26c84169a7c0666478&chksm=8338ec57b44f65415eb9159d9b36de3df84b27b84b745f843c6f6c2850eccc788a39a33f599e&scene=21#wechat_redirect">Pytest测试框架执行方式</a>、<a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzAwMzY3MTU3Nw==&mid=2650529576&idx=1&sn=930d40b06741877aba54b4f58cc35652&chksm=8338ec5eb44f6548c13ddf30b395a9cbde84e4b9cb516a694c8def876606d2c6efb05d546c05&scene=21#wechat_redirect">Pytest测试框架参数化</a>与<a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzAwMzY3MTU3Nw==&mid=2650529583&idx=1&sn=9550da0de4e574771541fbecac4a618c&chksm=8338ec59b44f654f3cdf03613fc369f5afbf4ac7ff019aa59efc407ac48cd92d42f5516c1a7b&scene=21#wechat_redirect">Pytest测试框架Fixture详解</a>，本文章主要详细地阐述下Pytest测试框架中Conftest.py特性。</p>
+<h1 id="conftest-py实战"><a href="#conftest-py实战" class="headerlink" title="conftest.py实战"></a>conftest.py实战</h1><p>Fixture强大的特性在实际的工作中是非常有价值并且是实用的，这样可以根据需求，在对应的测试模块中编写Fixture函数来达到测试需求的目的。但是这样也产生了新的问题，如有三个测试模块，并且测试需求都是需要Fixture函数，那么也就意味着每个测试模块都需要编写对应的Fixture函数代码了。这样显然是很不合理的。但是这样的案例在企业里面也是非常常见的情况，如授权的Fixture函数，不管哪个测试模块都是需要这个Fixture函数的。既然存在问题，有没有好的解决思路呢？在Pytest测试框架中提供了conftest.py来专门解决这部分问题。 通过conftest.py可以共享Fixture， 再本质的说就是通过conftest.py⽂件来达到共享Fixture函数。根据这个特性可以把一个测试工程中有多个测试模块共同使用到的公共Fixture函数分离到conftest.py文件中。使用conftest.py文件需要注意的点是：<u>conftest.py是一个模块文件，但是不能导入</u>。第二是建议把conftest.py文件位置存放在测试工程的根目录下，如下所示。</p>
+<p>  <img src="/2024/05/09/Pytest%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E4%B9%8BConftest-py%E8%AF%A6%E8%A7%A3/%E7%9B%AE%E5%BD%95.jpg" alt="目录"></p>
+<p>在工程的根目录下不言而喻，它是能够针对工程下所有的测试模块里面符合执行的所有测试函数(测试方法)都是共享Fixture函数的。这里以登录授权为案例，演示下授权的Fixture函数分离到conftest.py文件后，如何在多个测试模块中达到共享的特性。在test包下创建测试模块。在conftest.py里面编写获取授权登录的TOKEN的Fixture函数，源码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="comment"># author:无涯</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span>  pytest</span><br><span class="line"><span class="keyword">import</span>  requests</span><br><span class="line"></span><br><span class="line"><span class="meta">@pytest.fixture()</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">  r=requests.post(</span><br><span class="line">    url=<span class="string">&#x27;http://0.0.0.0:8000/login/auth/&#x27;</span>,</span><br><span class="line">    json=&#123;<span class="string">&quot;username&quot;</span>:<span class="string">&quot;13484545195&quot;</span>,<span class="string">&quot;password&quot;</span>:<span class="string">&quot;asd888&quot;</span>&#125;,</span><br><span class="line">    headers=&#123;<span class="string">&#x27;content-type&#x27;</span>:<span class="string">&#x27;application/json&#x27;</span>&#125;)</span><br><span class="line">  <span class="keyword">return</span> r.json()[<span class="string">&#x27;token&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="meta">@pytest.fixture()</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">headers</span>(<span class="params">login</span>):</span><br><span class="line"><span class="keyword">return</span> &#123;<span class="string">&#x27;Authorization&#x27;</span>:<span class="string">&#x27;JWT &#123;token&#125;&#x27;</span>.<span class="built_in">format</span>(token=login)&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在测试模块中分别调用conftest.py里面的Fixture函数headers，test_index.py模块源码如下。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="comment"># author:无涯</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span>  requests</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_case_index</span>(<span class="params">headers</span>):</span><br><span class="line">  r=requests.get(url=<span class="string">&#x27;http://0.0.0.0:8000/interface/index&#x27;</span>,headers=headers)</span><br><span class="line">  <span class="keyword">assert</span> r.status_code==<span class="number">200</span></span><br></pre></td></tr></table></figure>
+
+<p>test_platform.py源码如下。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="comment"># author:无涯</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span>  requests</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_case_query</span>(<span class="params">headers</span>):</span><br><span class="line">r=requests.get(</span><br><span class="line">url=<span class="string">&#x27;http://0.0.0.0:8000/interface/products?name=无涯课堂&#x27;</span>,</span><br><span class="line">headers=headers)</span><br><span class="line">  <span class="keyword">assert</span> r.status_code==<span class="number">200</span></span><br></pre></td></tr></table></figure>
+
+<p>整体目录结构如下所示。</p>
+<p><img src="/2024/05/09/Pytest%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E4%B9%8BConftest-py%E8%AF%A6%E8%A7%A3/%E6%95%B4%E4%BD%93%E7%9B%AE%E5%BD%95.jpg" alt="整体目录"></p>
+<p>在测试模块中都引用了conftest.py里面的Fixture函数headers，执行test包下所有的测试模块，执行后的结果信息如下。</p>
+<p><img src="/2024/05/09/Pytest%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E4%B9%8BConftest-py%E8%AF%A6%E8%A7%A3/%E7%BB%93%E6%9E%9C%E4%BF%A1%E6%81%AF.jpg" alt="结果信息"></p>
+<p>如上所示可以看到执行结果都是通过的。</p>
+<p>特别需要强调的是在一个测试工程下，不建议使用多个conftest.py的文件，这样会引起混乱，而且维护成本也高。不是所有的Fixture函数都是需要分离到conftest.py的，分离到conftest.py文件的Fixture函数一定是多个测试模块都共同需要共享这个Fixture函数，如果某个Fixture函数仅仅是某个测试模块中私有使用，这种情况其实完全就没分离的必要性。</p>
+<p>感谢您的阅读！服务端测试开发技术已经成为测试工程师、测试开发工程师成为高薪必备的测试开发技能，越早掌握，越能占得红利。本课程带您从零到一构建服务端测试开发知识体系，并引入了业界主流的测试开发技术栈体系(微服务架构,MQ消息队列,DevOps,性能测试,混沌工程等)，整合业内主流的测试开发技术，带您打通高薪测试开发工程师需要具备的软实力和测试开工技术的任督二脉。</p>
+<p><a target="_blank" rel="noopener" href="https://study.163.com/course/introduction/1212497802.htm">https://study.163.com/course/introduction/1212497802.htm</a></p>
+<p>《Python服务端测试开发》书籍已出版，书籍主要面向想系统、全栈学习服务端测试开发领域内的测试工程师，读者包含但不限于软件测试工程师、自动化测试工程师、测试开发工程师和测试管理者。通过本书您将会学习到服务端测试领域测试开发技术栈知识，包含了API测试框架设计思想与案例实战，Docker容器化技术，基于DevOps体系下的CI&#x2F;CD技术栈知识体系，CI&#x2F;CD技术在企业的技术落地案例，服务端测试开发领域的性能测试核心理论、方法论、流程化和主流性能测试在服务端的最佳实践、性能测试过程中全链路监控与分布式追踪监控技术解决方案，JVM性能分析与案例监控实践。同时您也会学习到微服务架构下质量体系建设，混沌工程实践，和针对底层高可用系统的保障技术思路。点击如下链接购买。</p>
+<p><a target="_blank" rel="noopener" href="https://product.dangdang.com/29701404.html">https://product.dangdang.com/29701404.html</a></p>
+<p>关注“Python自动化测试”公众号，阅读更多测试开发技术文章，与众多测试开发工程师一起进步。</p>
+<p><img src="/2024/05/09/Pytest%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E4%B9%8BConftest-py%E8%AF%A6%E8%A7%A3/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7.jpg" alt="微信公众号"></p>
+
+        </div>
+    
+<!-- tags -->
+
+    <div class="post-meta">
+        标签：
+        
+            <a href="/tags/Pytest%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/"> / Pytest测试框架</a>
+        
+    </div>
+
+</div>
+                <div class="footer">
+    <span>Copyright © 2024 无涯博客</span>
+    <span>Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> with <a target="_blank" rel="noopener" href="https:///imzl.com/zenmind">无涯</a></span>
+</div>
+
+<link rel="stylesheet" href="/css/a11y-dark.min.css">
+
+
+<script src="/js/highlight.min.js"></script>
+
+
+<script src="/js/highlightjs-line-numbers.js"></script>
+
+<script>
+    hljs.initHighlightingOnLoad();
+    hljs.initLineNumbersOnLoad();
+</script>
+
+            </div>
+        </div>
+    </body>
+</html>
